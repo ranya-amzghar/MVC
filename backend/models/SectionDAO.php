@@ -24,15 +24,8 @@ class SectionDAO{
             return $this->getDB()
                 ->query("SELECT * FROM sections ORDER BY id ASC")
                 ->fetchAll(PDO::FETCH_ASSOC);
-
         } catch (PDOException $e) {
-
-            throw new Exception(
-                "Erreur lors de la récupération des sections : "
-                . $e->getMessage(),
-                0,
-                $e
-            );
+            throw new Exception("Erreur lors de la récupération des sections : ". $e->getMessage(),0,$e);
         }
     }
 
