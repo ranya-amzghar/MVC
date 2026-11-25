@@ -1,26 +1,14 @@
 <?php
 
-class Database
-{
-    // --- Identifiants de connexion MySQL ---
-    private const HOST   = 'localhost';
-    private const DBNAME = 'salons_foires';
-    private const USER   = 'root';
-    private const PASS   = 'nez8ko$$';
-
-    private static ?PDO $pdo = null;
-
-    public static function getConnection(): PDO
-    {
-        if (self::$pdo === null) {
-            $dsn = "mysql:host=" . self::HOST . ";dbname=" . self::DBNAME . ";charset=utf8";
-
-            self::$pdo = new PDO($dsn, self::USER, self::PASS, [
-                PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-            ]);
+class Database{
+    public static function getConnection(): PDO{
+        try {
+            $db = new PDO("mysql:host=localhost;dbname=salons_foires;charset=utf8mb4","root","nez8ko$$");
+            $db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+            return $db;
+        }catch(PDOException $e){
+            throw new Exception("Database connection failed", 0, $e);
         }
-        return self::$pdo;
     }
 }
 ?>

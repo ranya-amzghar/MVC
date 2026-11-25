@@ -2,17 +2,14 @@
 
 require_once dirname(__DIR__) . '/config/Database.php';
 
-class SectionDAO
-{
+class SectionDAO{
     protected ?PDO $db = null;
 
-    public function __construct(?PDO $db = null)
-    {
+    public function __construct(?PDO $db = null){
         $this->db = $db;
     }
 
-    protected function getDB(): PDO
-    {
+    protected function getDB(): PDO{
         if ($this->db === null) {
             $this->db = Database::getConnection();
         }
@@ -21,8 +18,7 @@ class SectionDAO
     }
 
     // GET ALL SECTIONS
-    public function afficherTous(): array
-    {
+    public function afficherTous(): array{
         try {
 
             return $this->getDB()
@@ -32,7 +28,10 @@ class SectionDAO
         } catch (PDOException $e) {
 
             throw new Exception(
-                "Erreur lors de la récupération des sections"
+                "Erreur lors de la récupération des sections : "
+                . $e->getMessage(),
+                0,
+                $e
             );
         }
     }
